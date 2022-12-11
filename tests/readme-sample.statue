@@ -1,0 +1,21 @@
+struct vector
+    num x
+    num y
+    mag -> sqrt(x^2 + y^2)
+end
+
+def vector a + vector b -> vector [x: a.x + b.x, y: a.y + b.y]
+
+def vector a * num s -> vector [x: a.x * s, y: a.y * s]
+
+funct main()
+    let vector origin = [x: 10, y: 0]
+    vector my_pos = [x: 5.5, y: -4]
+
+    let offset = my_pos - origin
+
+    print("My vector has a magnitude of [offset.mag] units")
+    if offset.mag < 0 do // Notice: vector.mag can never be < 0
+        print("woh! how did that happen?")
+    end
+end
