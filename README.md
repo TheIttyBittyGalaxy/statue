@@ -12,9 +12,11 @@
 
 ## 💡 Motivation
 
-As a hobbyist programmer, I really like simplictity of programming with Lua. However, my two biggest pain points with it are that there is almost no static analysis, and that you can't make it do much on it's own. And that's fair enough, it was a languaged designed to write small scripts embedded into existing environments. Inspired by my experience in Lua, and the recent uptick in critical conversations about how to make _useful_ programming languages, I've been inspired to make a programming language inspired by this.
+As a hobbyist programmer I really like the simplicity of Lua, particularly when I'm coding with my "creative hat” on rather than an engineering mindset. However, my two biggest pain points with it are that there is almost no static analysis, and that you can't do much with it on its own. (And that's fair enough, it was a language designed to write small scripts embedded into existing environments!)
 
-The idea feels solid enough to me that I'd like to put some effort towards it. By all means, feel free to contribute code, thoughts, and ideas!
+Inspired by my experience in Lua, and the recent uptick in critical conversations about how to make _useful_ programming languages, I've had lots of programming language ideas swirling around in my head. This is my attempt to pull of those ideas together and turn them into something concrete. If I like the result, hopefully I'll use the language to actually make things too!
+
+The design pillars aren't set in stone, but the general direction feels solid enough to me that I'd like to put some effort towards it. Feel free to contribute code if you like, or thoughts and ideas are also welcome! Just fork the repo or open an issue, whatever works best :)
 
 ## 💾 Sample Code
 
