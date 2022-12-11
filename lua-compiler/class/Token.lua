@@ -42,4 +42,10 @@ function _Token:__tostring()
     return ("[%s %s:%s]"):format(self.kind, self.line, self.column)
 end
 
+---@param self Token
+---@return string
+function _Token:__tojson()
+    return tojson(tostring(self))
+end
+
 return Token
