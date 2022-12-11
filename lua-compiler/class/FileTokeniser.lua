@@ -65,7 +65,16 @@ function _FileTokeniser:peek(kind)
         return self:match('%d') ~= nil
     end
 
-    return self:match(Statue.token_pattern[kind]) ~= nil
+    for _, info in pairs(Statue.token_pattern) do
+        local pattern_kind, pattern = info[1], info[2]
+        if self:match(pattern) then
+            return pattern_kind == kind
+        elseif pattern_kind == kind then
+            return false
+        end
+    end
+
+    error(("Internal error: Attempt to peek for unknown token kind '%s'"):format(kind))
 end
 
 ---@param self FileTokeniser
