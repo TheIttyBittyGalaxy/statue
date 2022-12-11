@@ -1,14 +1,14 @@
 # 🧱 Statue
 
-**_A high level programming language for hobbists that is dedicated to structure_**
+**_A high-level programming language for hobbyists that is dedicated to structure_**
 
 ## 📜 Design Pillars
 
--   **Simple yet expressive**: be a simple, expressive, high-level language, that enables experienced programmers to do a lot with a little.
--   **Static analysis as a feature**: aim to have as much _useful_ static analysis as possible. When error checking, the language should report as many true positives as is helpful but with zero false negatives.
+-   **Simple yet expressive**: be a simple, expressive, high-level language, that lets experienced programmers to do a lot with a little.
+-   **Awesome static analysis**: have as much _useful_ static analysis as possible, but still with zero false negative error reporting.
 -   **Support the creative process**: support an iterative (and perhaps slightly ad-hoc) approach to development.
--   **Veritile out the box**: suitable for creating lots of different kinds of programs and for deployment in a range of different contexts.
--   **Lightweight-ish**: remain fairly lightweight, prefering expressive/high-level features that don't carry significant or unmanagable overhead.
+-   **Versatile**: suitable for creating lots of different kinds of programs and deployable across a range of contexts.
+-   **Lightweight-ish**: maintain quick compile and run times by opting for expressive features that don't carry significant or unnegotiable overhead.
 
 ## 💡 Motivation
 
@@ -52,6 +52,6 @@ This compiler, written in Lua, takes Statue source code and compiles it into C++
 
 ### `selfhost-compiler`
 
-This compiler, written in Statue, takes Statue source code and compiles it into C++. Once you compile it with the lua compiler, it is able to compile itself!
+This compiler, written in Statue, takes Statue source code and compiles it into C++. Once you compile it with the Lua compiler, it is able to compile itself!
 
 _(at least, that's the goal- it doesn't actually exist yet!)_
