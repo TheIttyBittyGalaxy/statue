@@ -16,9 +16,11 @@ local Reference = require "class.Reference"
 ---@field peek fun(self: Parser, kind: string) : boolean
 ---
 ---@field createScope fun(self: Parser, parent?: Node) : Node
+---@field addStatementToScope fun(self: Parser, scope: Node, stmt: Node)
 ---
 ---@field parseProgram fun(self: Parser)
----@field parseFunction fun(self: Parser, scope: Node) : Node
+---@field peekFunctionDeclaration fun(self: Parser) : boolean
+---@field parseFunctionDeclaration fun(self: Parser, scope: Node) : Node
 ---@field peekStatement fun(self: Parser) : boolean
 ---@field parseStatement fun(self: Parser, scope: Node) : Node
 ---@field peekExpression fun(self: Parser) : boolean
@@ -62,7 +64,7 @@ function _Parser:peek(kind)
     return self.tokeniser:peek(kind)
 end
 
--- APM UTILITY METHODS
+-- SCOPE UTILITY METHODS
 
 ---@param self Parser
 ---@param parent? Node
@@ -73,8 +75,14 @@ function _Parser:createScope(parent)
         scope.parent = Reference(parent)
     end
     scope.statements = {}
-    scope.functions = {}
     return scope
+end
+
+---@param self Parser
+---@param scope Node
+---@param stmt Node
+function _Parser:addStatementToScope(scope, stmt)
+    table.insert(scope.statements, stmt)
 end
 
 -- PARSE AND PEEK METHODS
@@ -84,13 +92,21 @@ function _Parser:parseProgram()
     local program = Node("PROGRAM")
     self.program_model = program
     program.scope = self:createScope()
-    table.insert(program.scope.functions, self:parseFunction(program.scope))
+
+    local stmt = self:parseStatement(program.scope)
+    self:addStatementToScope(program.scope, stmt)
+end
+
+---@param self Parser
+---@return boolean
+function _Parser:peekFunctionDeclaration()
+    return self:peek("KEY_FUNCT")
 end
 
 ---@param self Parser
 ---@param scope Node
 ---@return Node
-function _Parser:parseFunction(scope)
+function _Parser:parseFunctionDeclaration(scope)
     local funct = Node("FUNCTION")
     funct.scope = self:createScope(scope)
 
@@ -102,24 +118,29 @@ function _Parser:parseFunction(scope)
     self:eat("BRACKET_R")
 
     while self:peekStatement() do
-        table.insert(funct.scope.statements, self:parseStatement(funct.scope))
+        local stmt = self:parseStatement(funct.scope)
+        self:addStatementToScope(funct.scope, stmt)
     end
 
     self:eat("KEY_END")
 
-    return funct
+    local declaration = Node("FUNCTION_DECLARATION")
+    declaration.funct = funct
+    return declaration
 end
 
 ---@param self Parser
 ---@return boolean
 function _Parser:peekStatement()
     return self:peekExpression()
+        or self:peekFunctionDeclaration()
 end
 
 ---@param self Parser
 ---@param scope Node
 ---@return Node
 function _Parser:parseStatement(scope)
+    if self:peekFunctionDeclaration() then return self:parseFunctionDeclaration(scope) end
     if self:peekExpression() then return self:parseExpression() end
 
     local token = self:eat()
