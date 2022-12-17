@@ -15,16 +15,16 @@ local Reference = require "class.Reference"
 ---@field eat fun(self: Parser, kind?: string) : Token
 ---@field peek fun(self: Parser, kind: string) : boolean
 ---
----@field createScope fun(self: Parser, parent?: Node) : Node
----@field addStatementToScope fun(self: Parser, scope: Node, stmt: Node)
+---@field create_scope fun(self: Parser, parent?: Node) : Node
+---@field add_statement_to_scope fun(self: Parser, scope: Node, stmt: Node)
 ---
----@field parseProgram fun(self: Parser)
----@field peekFunctionDeclaration fun(self: Parser) : boolean
----@field parseFunctionDeclaration fun(self: Parser, scope: Node) : Node
----@field peekStatement fun(self: Parser) : boolean
----@field parseStatement fun(self: Parser, scope: Node) : Node
----@field peekExpression fun(self: Parser) : boolean
----@field parseExpression fun(self: Parser) : Node
+---@field parse_program fun(self: Parser)
+---@field peek_function_declaration fun(self: Parser) : boolean
+---@field parse_function_declaration fun(self: Parser, scope: Node) : Node
+---@field peek_statement fun(self: Parser) : boolean
+---@field parse_statement fun(self: Parser, scope: Node) : Node
+---@field peek_expression fun(self: Parser) : boolean
+---@field parse_expression fun(self: Parser) : Node
 
 local _Parser = {}
 _Parser.__index = _Parser
@@ -69,7 +69,7 @@ end
 ---@param self Parser
 ---@param parent? Node
 ---@return Node
-function _Parser:createScope(parent)
+function _Parser:create_scope(parent)
     local scope = Node("SCOPE")
     if parent then
         scope.parent = Reference(parent)
@@ -82,36 +82,36 @@ end
 ---@param self Parser
 ---@param scope Node
 ---@param stmt Node
-function _Parser:addStatementToScope(scope, stmt)
+function _Parser:add_statement_to_scope(scope, stmt)
     table.insert(scope.statements, stmt)
 end
 
 -- PARSE AND PEEK METHODS
 
 ---@param self Parser
-function _Parser:parseProgram()
+function _Parser:parse_program()
     local program = Node("PROGRAM")
     self.program_model = program
-    program.scope = self:createScope()
+    program.scope = self:create_scope()
 
     program.scope.lookup_table.print = Node("FUNCTION")
 
-    local stmt = self:parseStatement(program.scope)
-    self:addStatementToScope(program.scope, stmt)
+    local stmt = self:parse_statement(program.scope)
+    self:add_statement_to_scope(program.scope, stmt)
 end
 
 ---@param self Parser
 ---@return boolean
-function _Parser:peekFunctionDeclaration()
+function _Parser:peek_function_declaration()
     return self:peek("KEY_FUNCT")
 end
 
 ---@param self Parser
 ---@param scope Node
 ---@return Node
-function _Parser:parseFunctionDeclaration(scope)
+function _Parser:parse_function_declaration(scope)
     local funct = Node("FUNCTION")
-    funct.scope = self:createScope(scope)
+    funct.scope = self:create_scope(scope)
 
     self:eat("KEY_FUNCT")
     funct.identity = self:eat("IDENTITY")
@@ -120,9 +120,9 @@ function _Parser:parseFunctionDeclaration(scope)
     -- TODO: Parse arguments
     self:eat("BRACKET_R")
 
-    while self:peekStatement() do
-        local stmt = self:parseStatement(funct.scope)
-        self:addStatementToScope(funct.scope, stmt)
+    while self:peek_statement() do
+        local stmt = self:parse_statement(funct.scope)
+        self:add_statement_to_scope(funct.scope, stmt)
     end
 
     self:eat("KEY_END")
@@ -134,17 +134,17 @@ end
 
 ---@param self Parser
 ---@return boolean
-function _Parser:peekStatement()
-    return self:peekExpression()
-        or self:peekFunctionDeclaration()
+function _Parser:peek_statement()
+    return self:peek_expression()
+        or self:peek_function_declaration()
 end
 
 ---@param self Parser
 ---@param scope Node
 ---@return Node
-function _Parser:parseStatement(scope)
-    if self:peekFunctionDeclaration() then return self:parseFunctionDeclaration(scope) end
-    if self:peekExpression() then return self:parseExpression() end
+function _Parser:parse_statement(scope)
+    if self:peek_function_declaration() then return self:parse_function_declaration(scope) end
+    if self:peek_expression() then return self:parse_expression() end
 
     local token = self:eat()
     error(("Parsing error: Expected statement in %s at %s:%s (got %s)"):format(
@@ -157,23 +157,23 @@ end
 
 ---@param self Parser
 ---@return boolean
-function _Parser:peekExpression()
+function _Parser:peek_expression()
     return self:peek("IDENTITY") or self:peek("STRING_LITERAL")
 end
 
 ---@param self Parser
 ---@return Node
-function _Parser:parseExpression()
+function _Parser:parse_expression()
     if self:peek("IDENTITY") then
         local call = Node("CALL")
         call.identity = self:eat("IDENTITY")
         call.arguments = {}
 
         self:eat("BRACKET_L")
-        if self:peekExpression() then
+        if self:peek_expression() then
             local end_of_arguments = false
             repeat
-                table.insert(call.arguments, self:parseExpression())
+                table.insert(call.arguments, self:parse_expression())
                 if self:peek("COMMA") then
                     self:eat("COMMA")
                 else

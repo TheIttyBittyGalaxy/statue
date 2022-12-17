@@ -17,10 +17,10 @@ local file_path = arg[1] or "../tests/hello-world.statue"
 local tokeniser = FileTokeniser(file_path)
 local parser = Parser(tokeniser)
 tokeniser:skip_whitespace()
-parser:parseProgram()
+parser:parse_program()
 save(parser.program_model, "parser")
 
 -- Checker
 local checker = Checker(parser.program_model)
-checker:checkProgram()
+checker:check_program()
 save(checker.program_model, "checker")

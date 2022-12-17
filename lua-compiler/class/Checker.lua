@@ -14,14 +14,14 @@ local Reference = require "class.Reference"
 ---@field declare fun(self: Checker, scope: Node, node: Node)
 ---@field fetch fun(self: Checker, scope: Node, identity: string) : Reference
 ---
----@field checkProgram fun(self: Checker, )
----@field checkDeclarativeScope fun(self: Checker, scope: Node)
----@field checkImperitiveScope fun(self: Checker, scope: Node)
----@field checkDeclaration fun(self: Checker, declaration: Node)
----@field checkFunction fun(self: Checker, funct: Node)
----@field checkStatement fun(self: Checker, scope: Node, stmt: Node)
----@field checkExpression fun(self: Checker, scope: Node, expr: Node)
----@field checkCall fun(self: Checker, scope: Node, expr: Node)
+---@field check_program fun(self: Checker, )
+---@field check_declarative_scope fun(self: Checker, scope: Node)
+---@field check_imperitive_scope fun(self: Checker, scope: Node)
+---@field check_declaration fun(self: Checker, declaration: Node)
+---@field check_function fun(self: Checker, funct: Node)
+---@field check_statement fun(self: Checker, scope: Node, stmt: Node)
+---@field check_expression fun(self: Checker, scope: Node, expr: Node)
+---@field check_call fun(self: Checker, scope: Node, expr: Node)
 
 local _Checker = {}
 _Checker.__index = _Checker
@@ -79,10 +79,10 @@ end
 -- CHECK METHODS
 
 ---@param self Checker
-function _Checker:checkProgram()
+function _Checker:check_program()
     self:internal_verify(self.program_model, "PROGRAM")
 
-    self:checkDeclarativeScope(self.program_model.scope)
+    self:check_declarative_scope(self.program_model.scope)
 
     local main = self.program_model.scope.lookup_table.main
     if not main or main.kind ~= "FUNCTION" then
@@ -92,7 +92,7 @@ end
 
 ---@param self Checker
 ---@param scope Node
-function _Checker:checkDeclarativeScope(scope)
+function _Checker:check_declarative_scope(scope)
     self:internal_verify(scope, "SCOPE")
 
     -- In a declarative scope, we declare everything in the scope in the scope's
@@ -105,35 +105,35 @@ function _Checker:checkDeclarativeScope(scope)
     end
 
     for _, stmt in ipairs(scope.statements) do
-        self:checkStatement(scope, stmt)
+        self:check_statement(scope, stmt)
     end
 end
 
 ---@param self Checker
 ---@param scope Node
-function _Checker:checkImperitiveScope(scope)
+function _Checker:check_imperitive_scope(scope)
     self:internal_verify(scope, "SCOPE")
 
     for _, stmt in ipairs(scope.statements) do
-        self:checkStatement(scope, stmt)
+        self:check_statement(scope, stmt)
     end
 end
 
 ---@param self Checker
 ---@param declaration Node
-function _Checker:checkDeclaration(declaration)
+function _Checker:check_declaration(declaration)
     self:internal_verify(declaration, "DECLARATION")
 
     -- FIXME: Correctly check subject when it is not a function
-    self:checkFunction(declaration.subject)
+    self:check_function(declaration.subject)
 end
 
 ---@param self Checker
 ---@param funct Node
-function _Checker:checkFunction(funct)
+function _Checker:check_function(funct)
     self:internal_verify(funct, "FUNCTION")
 
-    self:checkImperitiveScope(funct.scope)
+    self:check_imperitive_scope(funct.scope)
 
     -- TODO: Check function parameters and returns
 end
@@ -141,29 +141,29 @@ end
 ---@param self Checker
 ---@param scope Node
 ---@param stmt Node
-function _Checker:checkStatement(scope, stmt)
+function _Checker:check_statement(scope, stmt)
     -- FIXME: Verify node kind node before continuing
 
-    if stmt.kind == "DECLARATION" then return self:checkDeclaration(stmt) end
+    if stmt.kind == "DECLARATION" then return self:check_declaration(stmt) end
 
     -- FIXME: Check if the statement is an expression node before attempting to check it as an expression
-    self:checkExpression(scope, stmt)
+    self:check_expression(scope, stmt)
 end
 
 ---@param self Checker
 ---@param scope Node
 ---@param expr Node
-function _Checker:checkExpression(scope, expr)
+function _Checker:check_expression(scope, expr)
     -- FIXME: Verify node kind node before continuing
 
-    if expr.kind == "CALL" then return self:checkCall(scope, expr) end
+    if expr.kind == "CALL" then return self:check_call(scope, expr) end
     error(("Internal error: Cannot check %s expression (or statement)"):format(expr.kind))
 end
 
 ---@param self Checker
 ---@param scope Node
 ---@param call Node
-function _Checker:checkCall(scope, call)
+function _Checker:check_call(scope, call)
     self:internal_verify(call, "CALL")
 
     call.funct = self:fetch(scope, call.identity.value)
