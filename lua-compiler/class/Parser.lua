@@ -95,6 +95,7 @@ function _Parser:parse_program()
     program.scope = self:create_scope()
 
     program.scope.lookup_table.print = Node("FUNCTION")
+    program.scope.lookup_table.print.identity = { value = "print" }
 
     local stmt = self:parse_statement(program.scope)
     self:add_statement_to_scope(program.scope, stmt)
