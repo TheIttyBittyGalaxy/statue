@@ -124,8 +124,8 @@ function _Parser:parseFunctionDeclaration(scope)
 
     self:eat("KEY_END")
 
-    local declaration = Node("FUNCTION_DECLARATION")
-    declaration.funct = funct
+    local declaration = Node("DECLARATION")
+    declaration.subject = funct
     return declaration
 end
 
