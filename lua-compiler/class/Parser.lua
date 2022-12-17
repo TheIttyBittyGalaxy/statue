@@ -1,4 +1,4 @@
--- This file takes tokens provided from FileTokeniser and generates an Abstract Program Model (APM).
+-- The Parser takes tokens provided from FileTokeniser and generates an Abstract Program Model (APM).
 --
 -- It is a handcrafted recursive decent parser. Each of the `parse` methods is able to construct
 -- a specific kind of node in the APM (e.g. a function), which it does by eating nodes and generating
