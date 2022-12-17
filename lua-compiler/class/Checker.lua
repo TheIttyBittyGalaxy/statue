@@ -14,7 +14,7 @@ local Reference = require "class.Reference"
 ---@field declare fun(self: Checker, scope: Node, node: Node)
 ---@field fetch fun(self: Checker, scope: Node, identity: string) : Reference
 ---
----@field check_program fun(self: Checker, )
+---@field check_program fun(self: Checker)
 ---@field check_declarative_scope fun(self: Checker, scope: Node)
 ---@field check_imperitive_scope fun(self: Checker, scope: Node)
 ---@field check_declaration fun(self: Checker, declaration: Node)
