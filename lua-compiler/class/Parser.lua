@@ -75,6 +75,7 @@ function _Parser:createScope(parent)
         scope.parent = Reference(parent)
     end
     scope.statements = {}
+    scope.lookup_table = {}
     return scope
 end
 
@@ -92,6 +93,8 @@ function _Parser:parseProgram()
     local program = Node("PROGRAM")
     self.program_model = program
     program.scope = self:createScope()
+
+    program.scope.lookup_table.print = Node("FUNCTION")
 
     local stmt = self:parseStatement(program.scope)
     self:addStatementToScope(program.scope, stmt)
