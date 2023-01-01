@@ -1,3 +1,7 @@
+// EXPECT:
+// 12
+// 17
+
 struct vector
     num x
     num y
@@ -13,6 +17,6 @@ funct main()
     let vector a = [x: 2, y: 3]
     let vector b = [x: 5, y: 7]
     let vector c = a + b * 2
-    print(c.x) /// 12
-    print(c.y) /// 17
+    print(c.x)
+    print(c.y)
 end

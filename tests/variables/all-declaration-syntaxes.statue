@@ -1,11 +1,17 @@
+// EXPECT:
+// Hello World
+// Howdy World
+// Greetings World
+// Hey World
+
 funct main()
     s1 = "Hello World"
     string s2 = "Howdy World"
     let s3 = "Greetings World"
     let string s4 = "Hey World"
 
-    print(s1) /// Hello World
-    print(s2) /// Howdy World
-    print(s3) /// Greetings World
-    print(s4) /// Hey World
+    print(s1)
+    print(s2)
+    print(s3)
+    print(s4)
 end

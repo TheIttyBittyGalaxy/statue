@@ -1,5 +1,9 @@
+// EXPECT:
+// Howdy World
+// 2 + 3 = 5
+
 funct main() 
     let greeting = "Howdy"
-    print("[greeting] World") /// Howdy World
-    print("2 + 3 = [2 + 3]")  /// 2 + 3 = 5
+    print("[greeting] World")
+    print("2 + 3 = [2 + 3]")
 end

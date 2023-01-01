@@ -1,7 +1,13 @@
+// EXPECT ERROR
+
+// FIXME: Make error expectation more specific (currently, the test "succeeds"
+//        because this test crashes the compiler, not because the correct
+//        error is identified.)
+
 funct main()
     let greeting = "Hello World"
-    print(greeting) /// Hello World
+    print(greeting)
 
-    greeting = "Hey World" /// ERROR
+    greeting = "Hey World"
     print(greeting)
 end

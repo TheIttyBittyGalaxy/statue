@@ -1,3 +1,7 @@
+// EXPECT:
+// 10
+// 20
+
 struct vector
     num x
     num y
@@ -5,7 +9,6 @@ end
 
 funct main()
     position = vector [x: 10, y: 20]
-
-    print(position.x) /// 10
-    print(position.y) /// 20
+    print(position.x)
+    print(position.y)
 end

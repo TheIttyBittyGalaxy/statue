@@ -1,10 +1,15 @@
+// EXPECT:
+// Hello World
+// Hey World
+// Howdy World
+
 funct main()
     greeting = "Hello World"
-    print(greeting) /// Hello World
+    print(greeting)
 
     greeting = "Hey World"
-    print(greeting) /// Hey World
+    print(greeting)
 
     greeting = "Howdy World"
-    print(greeting) /// Howdy World
+    print(greeting)
 end
