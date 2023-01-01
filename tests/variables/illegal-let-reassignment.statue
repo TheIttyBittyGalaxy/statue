@@ -1,0 +1,7 @@
+funct main()
+    let greeting = "Hello World"
+    print(greeting) /// Hello World
+
+    greeting = "Hey World"
+    print(greeting) /// Hey World
+end

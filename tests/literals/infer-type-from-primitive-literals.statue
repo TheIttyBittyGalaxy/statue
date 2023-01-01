@@ -1,0 +1,9 @@
+funct main() 
+    a = -10
+    b = 3.14
+    c = "Hello World"
+    d = true
+
+    // TODO: Create a way to output the infered type of a variable?
+    //       e.g. `print(typeof a)`
+end

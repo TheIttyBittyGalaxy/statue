@@ -12,7 +12,7 @@ local function save(json, name)
     end
 end
 
-local source_file_path = arg[1] or "../tests/hello-world.statue"
+local source_file_path = arg[1] or "../tests/samples/hello-world.statue"
 local output_file_path = "local/generator.cpp"
 
 -- Parser

@@ -1,0 +1,10 @@
+funct main()
+    greeting = "Hello World"
+    print(greeting) /// Hello World
+
+    greeting = "Hey World"
+    print(greeting) /// Hey World
+
+    greeting = "Howdy World"
+    print(greeting) /// Howdy World
+end

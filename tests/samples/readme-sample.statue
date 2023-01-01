@@ -4,6 +4,8 @@ struct vector
     mag -> sqrt(x^2 + y^2)
 end
 
+def -vector a -> vector [x: -a.x, y: -a.y]
+
 def vector a + vector b -> vector [x: a.x + b.x, y: a.y + b.y]
 
 def vector a * num s -> vector [x: a.x * s, y: a.y * s]

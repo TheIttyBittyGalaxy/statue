@@ -1,0 +1,11 @@
+funct main()
+    print(max(10, 0)) /// 10
+    print(min(0, 10)) /// 0
+    
+    print(clamp(-5, 0, 10)) /// 0
+    print(clamp( 5, 0, 10)) /// 5
+    print(clamp(15, 0, 10)) /// 10
+
+    print(sqrt(4))
+    print(sqrt(10))
+end

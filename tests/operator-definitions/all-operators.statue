@@ -1,0 +1,59 @@
+struct complex
+    num r
+    num i
+end
+
+// TODO: `a - b` can be infered from `a + b` and `-a` (`a - b` = `a + -b`)
+//       However, given that there is no such thing as unary division (except I suppose the reciprocal?)
+//       how should programmers declare `a / b`?
+
+def -complex a -> complex [r: -a.r, i: -a.i]
+
+def complex a + complex b -> complex [r: a.r + b.r, i: a.i + b.i]
+def complex a + num b -> complex [r: a.r + b, i: a.i]
+
+def complex a * complex b -> complex [
+    r: a.r * b.r - a.i * b.i, 
+    i: a.r * b.i + a.i * b.r
+]
+def complex a * num b -> complex [
+    r: a.r * b, 
+    i: a.i * b
+]
+
+funct main()
+    let complex i = [r: 0, i: 1]
+
+    // TODO: Implement a way of displaying structs as strings, than add expectations
+    //       for the print statements below
+
+    complex v = [r: 1, i: 0]
+    print(v)
+
+    v *= i
+    print(v)
+
+    v += 2
+    print(v)
+
+    v *= i
+    print(v)
+
+    v += v
+    print(v)
+
+    v *= i
+    print(v)
+
+    v *= 2
+    print(v)
+
+    v *= i
+    print(v)
+
+    v = -v
+    print(v)
+
+    v *= i
+    print(v)
+end

@@ -1,0 +1,10 @@
+struct vector
+    num x
+    num y
+end
+
+funct main()
+    vector position = [x: 10, y: 20]
+    print(position.x) /// 10
+    print(position.y) /// 20
+end

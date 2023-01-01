@@ -1,0 +1,18 @@
+struct vector
+    num x
+    num y
+end
+
+def -vector a -> vector [x: -a.x, y: -a.y]
+
+def vector a + vector b -> vector [x: a.x + b.x, y: a.y + b.y]
+
+def vector a * num s -> vector [x: a.x * s, y: a.y * s]
+
+funct main()
+    let vector a = [x: 2, y: 3]
+    let vector b = [x: 5, y: 7]
+    let vector c = a + b * 2
+    print(c.x) /// 12
+    print(c.y) /// 17
+end

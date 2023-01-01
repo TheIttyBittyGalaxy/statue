@@ -1,0 +1,5 @@
+funct main() 
+    let greeting = "Howdy"
+    print("[greeting] World") /// Howdy World
+    print("2 + 3 = [2 + 3]")  /// 2 + 3 = 5
+end

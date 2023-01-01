@@ -1,0 +1,12 @@
+struct vector
+    num x
+    num y
+    mag -> sqrt(x^2 + y^2)
+end
+
+funct main()
+    vector position = [x: 3, y: 4]
+    print(position.x) /// 3
+    print(position.y) /// 4
+    print(position.mag) /// 5
+end
