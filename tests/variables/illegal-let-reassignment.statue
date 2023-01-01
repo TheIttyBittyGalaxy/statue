@@ -2,6 +2,6 @@ funct main()
     let greeting = "Hello World"
     print(greeting) /// Hello World
 
-    greeting = "Hey World"
-    print(greeting) /// Hey World
+    greeting = "Hey World" /// ERROR
+    print(greeting)
 end
